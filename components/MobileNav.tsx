@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import MobileNavButton from "./MobileNavButton";
 
 export default function MobileNav() {
   const pathname = usePathname();
@@ -44,25 +45,16 @@ export default function MobileNav() {
                     pathname === link.route || pathname === link.route + "/";
                   return (
                     <SheetClose asChild key={link.label}>
-                      <Link
-                        href={link.route}
-                        key={link.label}
-                        className={cn(
-                          "flex gap-4 items-center p-4 rounded-lg w-full max-w-50",
-                          { "bg-blue-1": isActive }
-                        )}
-                      >
-                        <Image
-                          src={link.imgUrl}
-                          width={20}
-                          height={20}
-                          alt={link.label}
-                        />
-                        <p className="font-semibold ">{link.label}</p>
-                      </Link>
+                      <MobileNavButton {...link} isActive={isActive} />
                     </SheetClose>
                   );
                 })}
+                <MobileNavButton
+                  route={process.env.NEXT_PUBLIC_HANGOUT_URL!}
+                  label="Hangout"
+                  imgUrl="/icons/message-square.svg"
+                  isActive={pathname === "/hangout"}
+                />
               </section>
             </SheetClose>
           </div>
